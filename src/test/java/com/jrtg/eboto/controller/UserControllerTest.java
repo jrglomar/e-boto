@@ -2,8 +2,8 @@ package com.jrtg.eboto.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jrtg.eboto.exception.RecordNotFoundException;
-import com.jrtg.eboto.model.Candidate;
-import com.jrtg.eboto.service.CandidateService;
+import com.jrtg.eboto.model.User;
+import com.jrtg.eboto.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,94 +17,95 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CandidateController.class)
-public class CandidateControllerTest {
+@WebMvcTest(UserController.class)
+class UserControllerTest {
 
     @MockBean
-    private CandidateService candidateService;
+    private UserService userService;
 
     @Autowired
     private MockMvc mockMvc;
 
-    Candidate candidate1;
-    Candidate candidate2;
-    Candidate candidate3;
-    Iterable<Candidate> candidateList;
+    User user1;
+    User user2;
+    User user3;
+    Iterable<User> userList;
 
     @BeforeEach
     void setup() {
-        candidate1 = Candidate.builder().candidateId(1L).candidateName("Raven").build();
+        user1 = User.builder().userId(1L).userName("jglomar").build();
 
-        candidate2 = Candidate.builder().candidateId(2L).candidateName("AJ").build();
+        user2 = User.builder().userId(2L).userName("agutierrez").build();
 
-        candidate3 = Candidate.builder().candidateId(3L).candidateName("Baqui").build();
+        user3 = User.builder().userId(3L).userName("cbaqui").build();
 
-        candidateList = List.of(candidate1, candidate2, candidate3);
+        userList = List.of(user1, user2, user3);
     }
 
 
     @Test
-    @DisplayName("Finding all candidate data")
+    @DisplayName("Finding all user data")
     void findAll() throws Exception {
 
-        when(candidateService.findAllCandidate()).thenReturn(candidateList);
+        when(userService.findAllUser()).thenReturn(userList);
 
-        mockMvc.perform(get("/candidates")
+        mockMvc.perform(get("/users")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].candidateName", containsInAnyOrder("AJ", "Raven", "Baqui")))
+                .andExpect(jsonPath("$[*].userName", containsInAnyOrder("jglomar", "agutierrez", "cbaqui")))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Finding candidate by id")
+    @DisplayName("Finding user by id")
     void findById() throws Exception {
-        when(candidateService.findCandidateById(anyLong())).thenReturn(candidate1);
+        when(userService.findUserById(anyLong())).thenReturn(user1);
 
-        mockMvc.perform(get("/candidates/{id}", 1)
+        mockMvc.perform(get("/users/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.candidateId").value(1))
+                .andExpect(jsonPath("$.userId").value(1))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Saving a new candidate")
+    @DisplayName("Saving a new user")
     void save() throws Exception {
-        when(candidateService.saveCandidate(any(Candidate.class))).thenReturn(candidate1);
+        when(userService.saveUser(any(User.class))).thenReturn(user1);
 
-        mockMvc.perform(post("/candidates")
+        mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(candidate1)))
-                .andExpect(jsonPath("$.candidateName").value("Raven"))
-                .andExpect(jsonPath("$.candidateId").value(1))
+                        .content(new ObjectMapper().writeValueAsString(user1)))
+                .andExpect(jsonPath("$.userName").value("jglomar"))
+                .andExpect(jsonPath("$.userId").value(1))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Updating an existing candidate")
+    @DisplayName("Updating an existing user")
     void update() throws Exception {
-        when(candidateService.updateCandidate(any(Candidate.class), anyLong())).thenReturn(candidate1);
+        when(userService.updateUser(any(User.class), anyLong())).thenReturn(user1);
 
-        mockMvc.perform(put("/candidates/{id}", 1)
+        mockMvc.perform(put("/users/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(candidate1)))
-                .andExpect(jsonPath("$.candidateId").value("1"))
+                        .content(new ObjectMapper().writeValueAsString(user1)))
+                .andExpect(jsonPath("$.userId").value("1"))
                 .andExpect(status().isAccepted());
     }
 
     @Test
-    @DisplayName("Delete a candidate")
+    @DisplayName("Delete a user")
     void delete() throws Exception {
-        when(candidateService.deleteCandidate(anyLong())).thenReturn("Record is deleted.");
+        when(userService.deleteUser(anyLong())).thenReturn("Record is deleted.");
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/candidates/{id}", 1)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"Record is deleted.\"}"))
                 .andExpect(content().string("Record is deleted."))
@@ -114,10 +115,10 @@ public class CandidateControllerTest {
     @Test
     @DisplayName("Record not found")
     void recordNotFound() throws Exception {
-        when(candidateService.findCandidateById(any()))
+        when(userService.findUserById(any()))
                 .thenThrow(new RecordNotFoundException("Record not found."));
 
-        mockMvc.perform(get("/candidates/{id}", 1)
+        mockMvc.perform(get("/users/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof RecordNotFoundException))

@@ -30,12 +30,12 @@ public class UserController {
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) throws RecordNotFoundException {
         return new ResponseEntity<>(userService.updateUser(user, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
         return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.ACCEPTED);
     }

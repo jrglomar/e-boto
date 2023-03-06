@@ -30,12 +30,12 @@ public class VotingLineController {
         return new ResponseEntity<>(votingLineService.saveVotingLine(votingLine), HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<VotingLine> update(@RequestBody VotingLine votingLine, @PathVariable Long id) throws RecordNotFoundException {
         return new ResponseEntity<>(votingLineService.updateVotingLine(votingLine, id), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
         return new ResponseEntity<>(votingLineService.deleteVotingLine(id), HttpStatus.ACCEPTED);
     }

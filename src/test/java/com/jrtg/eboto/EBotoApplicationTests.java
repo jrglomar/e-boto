@@ -10,4 +10,8 @@ class EBotoApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void main() {
+	}
+
 }
