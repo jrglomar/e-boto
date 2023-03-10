@@ -6,6 +6,8 @@ import com.jrtg.eboto.repository.VotingLineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class VotingLineServiceImpl implements VotingLineService {
     @Autowired
@@ -17,7 +19,7 @@ public class VotingLineServiceImpl implements VotingLineService {
     }
 
     @Override
-    public Iterable<VotingLine> findAllVotingLine() {
+    public List<VotingLine> findAllVotingLine() {
         return votingLineRepository.findAll();
     }
 

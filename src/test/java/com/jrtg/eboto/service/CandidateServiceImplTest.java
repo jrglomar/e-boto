@@ -33,7 +33,7 @@ class CandidateServiceImplTest {
     Candidate candidate1;
     Candidate candidate2;
     Candidate candidate3;
-    Iterable<Candidate> candidateList;
+    List<Candidate> candidateList;
 
     @BeforeEach
     void setup() {
@@ -62,7 +62,7 @@ class CandidateServiceImplTest {
     void findAllCandidate() {
         when(candidateRepository.findAll()).thenReturn(candidateList);
 
-        Iterable<Candidate> result = candidateService.findAllCandidate();
+        List<Candidate> result = candidateService.findAllCandidate();
 
         verify(candidateRepository).findAll();
         assertThat(result).isEqualTo(candidateList);

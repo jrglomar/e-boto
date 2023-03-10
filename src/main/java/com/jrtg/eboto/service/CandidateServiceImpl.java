@@ -6,6 +6,8 @@ import com.jrtg.eboto.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -18,7 +20,7 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public Iterable<Candidate> findAllCandidate() {
+    public List<Candidate> findAllCandidate() {
         return candidateRepository.findAll();
     }
 
