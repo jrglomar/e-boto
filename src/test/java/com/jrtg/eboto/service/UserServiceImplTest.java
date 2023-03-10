@@ -38,7 +38,7 @@ class UserServiceImplTest {
     User user1;
     User user2;
     User user3;
-    Iterable<User> userList;
+    List<User> userList;
 
     @BeforeEach
     void setup() {
@@ -82,7 +82,7 @@ class UserServiceImplTest {
     void findAllUser() {
         when(userRepository.findAll()).thenReturn(userList);
 
-        Iterable<User> result = userService.findAllUser();
+        List<User> result = userService.findAllUser();
 
         verify(userRepository).findAll();
         assertThat(result).isEqualTo(userList);

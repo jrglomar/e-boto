@@ -37,7 +37,7 @@ public class CandidateControllerTest {
     Candidate candidate1;
     Candidate candidate2;
     Candidate candidate3;
-    Iterable<Candidate> candidateList;
+    List<Candidate> candidateList;
 
     @BeforeEach
     void setup() {

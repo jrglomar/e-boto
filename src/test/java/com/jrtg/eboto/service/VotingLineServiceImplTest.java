@@ -33,7 +33,7 @@ class VotingLineServiceImplTest {
     VotingLine votingLine1;
     VotingLine votingLine2;
     VotingLine votingLine3;
-    Iterable<VotingLine> votingLinesList;
+    List<VotingLine> votingLinesList;
 
 
     @BeforeEach
@@ -71,7 +71,7 @@ class VotingLineServiceImplTest {
     void findAllVotingLine() {
         when(votingLineRepository.findAll()).thenReturn(votingLinesList);
 
-        Iterable<VotingLine> result = votingLineService.findAllVotingLine();
+        List<VotingLine> result = votingLineService.findAllVotingLine();
 
         verify(votingLineRepository).findAll();
         assertThat(result).isEqualTo(votingLinesList);

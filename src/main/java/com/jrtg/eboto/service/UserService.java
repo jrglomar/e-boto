@@ -3,11 +3,13 @@ package com.jrtg.eboto.service;
 import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.User;
 
+import java.util.List;
+
 
 public interface UserService {
     User findUserById(Long id) throws RecordNotFoundException;
 
-    Iterable<User> findAllUser();
+    List<User> findAllUser();
 
     User saveUser(User user);
 

@@ -38,7 +38,7 @@ public class VotingLineControllerTest {
     VotingLine votingLine1;
     VotingLine votingLine2;
     VotingLine votingLine3;
-    Iterable<VotingLine> votingLineList;
+    List<VotingLine> votingLineList;
 
     @BeforeEach
     void setup() {

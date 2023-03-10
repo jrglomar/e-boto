@@ -2,8 +2,8 @@ package com.jrtg.eboto.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jrtg.eboto.exception.RecordNotFoundException;
-import com.jrtg.eboto.model.User;
-import com.jrtg.eboto.service.UserService;
+import com.jrtg.eboto.model.Election;
+import com.jrtg.eboto.service.ElectionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,95 +17,94 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(UserController.class)
-class UserControllerTest {
+@WebMvcTest(ElectionController.class)
+public class ElectionControllerTest {
 
     @MockBean
-    private UserService userService;
+    private ElectionService electionService;
 
     @Autowired
     private MockMvc mockMvc;
 
-    User user1;
-    User user2;
-    User user3;
-    List<User> userList;
+    Election election1;
+    Election election2;
+    Election election3;
+    List<Election> electionList;
 
     @BeforeEach
     void setup() {
-        user1 = User.builder().userId(1L).userName("jglomar").build();
+        election1 = Election.builder().electionId(1L).electionName("Raven").build();
 
-        user2 = User.builder().userId(2L).userName("agutierrez").build();
+        election2 = Election.builder().electionId(2L).electionName("AJ").build();
 
-        user3 = User.builder().userId(3L).userName("cbaqui").build();
+        election3 = Election.builder().electionId(3L).electionName("Baqui").build();
 
-        userList = List.of(user1, user2, user3);
+        electionList = List.of(election1, election2, election3);
     }
 
 
     @Test
-    @DisplayName("Finding all user data")
+    @DisplayName("Finding all election data")
     void findAll() throws Exception {
 
-        when(userService.findAllUser()).thenReturn(userList);
+        when(electionService.findAllElection()).thenReturn(electionList);
 
-        mockMvc.perform(get("/users")
+        mockMvc.perform(get("/elections")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].userName", containsInAnyOrder("jglomar", "agutierrez", "cbaqui")))
+                .andExpect(jsonPath("$[*].electionName", containsInAnyOrder("AJ", "Raven", "Baqui")))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Finding user by id")
+    @DisplayName("Finding election by id")
     void findById() throws Exception {
-        when(userService.findUserById(anyLong())).thenReturn(user1);
+        when(electionService.findElectionById(anyLong())).thenReturn(election1);
 
-        mockMvc.perform(get("/users/{id}", 1)
+        mockMvc.perform(get("/elections/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.userId").value(1))
+                .andExpect(jsonPath("$.electionId").value(1))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Saving a new user")
+    @DisplayName("Saving a new election")
     void save() throws Exception {
-        when(userService.saveUser(any(User.class))).thenReturn(user1);
+        when(electionService.saveElection(any(Election.class))).thenReturn(election1);
 
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/elections")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(user1)))
-                .andExpect(jsonPath("$.userName").value("jglomar"))
-                .andExpect(jsonPath("$.userId").value(1))
+                        .content(new ObjectMapper().writeValueAsString(election1)))
+                .andExpect(jsonPath("$.electionName").value("Raven"))
+                .andExpect(jsonPath("$.electionId").value(1))
                 .andExpect(status().isOk());
     }
 
     @Test
-    @DisplayName("Updating an existing user")
+    @DisplayName("Updating an existing election")
     void update() throws Exception {
-        when(userService.updateUser(any(User.class), anyLong())).thenReturn(user1);
+        when(electionService.updateElection(any(Election.class), anyLong())).thenReturn(election1);
 
-        mockMvc.perform(put("/users/{id}", 1)
+        mockMvc.perform(put("/elections/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(user1)))
-                .andExpect(jsonPath("$.userId").value("1"))
+                        .content(new ObjectMapper().writeValueAsString(election1)))
+                .andExpect(jsonPath("$.electionId").value("1"))
                 .andExpect(status().isAccepted());
     }
 
     @Test
-    @DisplayName("Delete a user")
+    @DisplayName("Delete a election")
     void delete() throws Exception {
-        when(userService.deleteUser(anyLong())).thenReturn("Record is deleted.");
+        when(electionService.deleteElection(anyLong())).thenReturn("Record is deleted.");
 
-        mockMvc.perform(MockMvcRequestBuilders.delete("/users/{id}", 1)
+        mockMvc.perform(MockMvcRequestBuilders.delete("/elections/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"Record is deleted.\"}"))
                 .andExpect(content().string("Record is deleted."))
@@ -115,10 +114,10 @@ class UserControllerTest {
     @Test
     @DisplayName("Record not found")
     void recordNotFound() throws Exception {
-        when(userService.findUserById(any()))
+        when(electionService.findElectionById(any()))
                 .thenThrow(new RecordNotFoundException("Record not found."));
 
-        mockMvc.perform(get("/users/{id}", 1)
+        mockMvc.perform(get("/elections/{id}", 1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof RecordNotFoundException))

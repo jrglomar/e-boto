@@ -3,10 +3,12 @@ package com.jrtg.eboto.service;
 import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.Candidate;
 
+import java.util.List;
+
 public interface CandidateService {
     Candidate findCandidateById(Long id) throws RecordNotFoundException;
     
-    Iterable<Candidate> findAllCandidate();
+    List<Candidate> findAllCandidate();
     
     Candidate saveCandidate(Candidate candidate);
     
