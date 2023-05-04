@@ -18,13 +18,26 @@ public class User extends BaseAuditClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false)
+    @Column(updatable = false, nullable = false,name = "user_id")
     private Long userId;
 
-    @Column(length = 100, nullable = false)
-    private String userName;
-    
-    @Column
-    private String userPassword;
+//    @Column(length = 100, nullable = false)
+//    private String userName;
+//
+//    @Column
+//    private String userPassword;
+    @Column(length = 100, nullable = false,name = "first_Name")
+    private String firstName;
+    @Column(length = 100, nullable = false,name = "middle_Name")
+    private String middleName;
+    @Column(length = 100, nullable = false,name = "last_Name")
+    private String lastName;
+    @Column(length = 100, nullable = false,name = "email")
+    private String email;
+    @Column(length = 100, nullable = false,name = "password")
+    private String password;
+
+
+
     
 }

@@ -13,9 +13,9 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Autowired
     CandidateRepository candidateRepository;
-    
+
     @Override
-    public Candidate findCandidateById(Long id) throws RecordNotFoundException {
+    public Candidate findCandidateById(Long id){
         return candidateRepository.findById(1L).orElseThrow(() -> new RecordNotFoundException("Record not found."));
     }
 
@@ -30,20 +30,20 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public Candidate updateCandidate(Candidate candidateRequest, Long id) throws RecordNotFoundException {
+    public Candidate updateCandidate(Candidate candidateRequest, Long id){
         Candidate candidateFound = candidateRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
-        
-        candidateFound.setCandidateName(candidateRequest.getCandidateName());
+        candidateFound.setName(candidateRequest.getName());
+        candidateFound.setDescription(candidateRequest.getDescription());
         return candidateRepository.save(candidateFound);
     }
-    
+
 
     @Override
-    public String deleteCandidate(Long id) throws RecordNotFoundException {
+    public String deleteCandidate(Long id) {
         Candidate candidateFound = candidateRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
-        candidateFound.setCandidateName("delet3d");
+        candidateFound.setName("delet3d");
         candidateRepository.save(candidateFound);
-        
+
         return "Record deleted.";
     }
 }

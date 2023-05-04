@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface VotingLineService {
 
-    VotingLine findVotingLineById(Long id) throws RecordNotFoundException;
+    VotingLine findVotingLineById(Long id);
 
     List<VotingLine> findAllVotingLine();
 
     VotingLine saveVotingLine(VotingLine votingLine);
 
-    VotingLine updateVotingLine(VotingLine votingLine, Long id) throws RecordNotFoundException;
+    VotingLine updateVotingLine(VotingLine votingLine, Long id);
 
-    String deleteVotingLine(Long id) throws RecordNotFoundException;
+    String deleteVotingLine(Long id);
 
 }

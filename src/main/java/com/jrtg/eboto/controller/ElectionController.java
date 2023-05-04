@@ -21,7 +21,7 @@ public class ElectionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Election> findById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<Election> findById(@PathVariable Long id){
         return new ResponseEntity<>(electionService.findElectionById(id), HttpStatus.OK);
     }
 
@@ -31,12 +31,12 @@ public class ElectionController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Election> update(@RequestBody Election election, @PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<Election> update(@RequestBody Election election, @PathVariable Long id){
         return new ResponseEntity<>(electionService.updateElection(election, id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity<>(electionService.deleteElection(id), HttpStatus.ACCEPTED);
     }
 }

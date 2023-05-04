@@ -1,23 +1,19 @@
 package com.jrtg.eboto.service;
 
-import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.User;
 import com.jrtg.eboto.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.shadow.com.univocity.parsers.common.record.Record;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.*;
@@ -45,18 +41,25 @@ class UserServiceImplTest {
 
         user1 = User.builder()
                 .userId(1L)
-                .userName("jglomar")
-                .userPassword("p@ssw0rd")
+                .firstName("jglomar")
+                .password("p@ssw0rd")
+                .email("")
+                .lastName("")
                 .build();
         user2 = User.builder()
                 .userId(2L)
-                .userName("agutierrez")
-                .userPassword("p@ssw0rd")
+                .firstName("agutierrez")
+                .password("p@ssw0rd")
+                .email("")
+                .lastName("")
                 .build();
         user3 = User.builder()
                 .userId(3L)
-                .userName("cbaquiran")
-                .userPassword("p@ssw0rd")
+                .firstName("cbaquiran")
+                .middleName("C")
+                .email("")
+                .lastName("")
+                .password("p@ssw0rd")
                 .build();
 
         userList = List.of(user1, user2, user3);
@@ -106,7 +109,7 @@ class UserServiceImplTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
 
-        User updateSample = new User(1L, "jglomar_updated", "p@ssw0rd");
+        User updateSample = new User(1L, "jglomar_updated", "p@ssw0rd","","","");
         when(userRepository.save(any(User.class))).thenReturn(updateSample);
         User result = userService.updateUser(updateSample, 1L);
 
@@ -122,7 +125,7 @@ class UserServiceImplTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
 
-        User updateSample = new User(1L, "jglomar", "updat3d");
+        User updateSample = new User(1L, "jglomar", "updat3d","","","");
         String result = userService.deleteUser(1L);
 
         verify(userRepository).findById(1L);

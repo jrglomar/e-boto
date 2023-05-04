@@ -13,24 +13,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Candidate extends BaseAuditClass {
+public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false, nullable = false,name = "candidate_id")
-    private Long candidateId;
+    @Column(updatable = false, nullable = false, name = "position_id")
+    private Long positionId;
 
-    //    @Column(length = 100, nullable = false)
-//    private String candidateName;
-    @Column(length = 100, nullable = false)
-    private String name;
-
-    @Column(length = 100, nullable = false)
-    private String description;
+    @Column(length = 50, nullable = false)
+    private String title;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "election_id")
-    private Position position;
+    private Election election;
 
 
 }

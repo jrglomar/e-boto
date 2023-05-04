@@ -15,7 +15,7 @@ public class ElectionServiceImpl implements ElectionService {
     ElectionRepository electionRepository;
 
     @Override
-    public Election findElectionById(Long id) throws RecordNotFoundException {
+    public Election findElectionById(Long id){
         return electionRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
     }
 
@@ -30,7 +30,7 @@ public class ElectionServiceImpl implements ElectionService {
     }
 
     @Override
-    public Election updateElection(Election election, Long id) throws RecordNotFoundException {
+    public Election updateElection(Election election, Long id){
         Election electionFound = electionRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Record not found."));
         
@@ -40,7 +40,7 @@ public class ElectionServiceImpl implements ElectionService {
     }
 
     @Override
-    public String deleteElection(Long id) throws RecordNotFoundException {
+    public String deleteElection(Long id){
         Election electionFound = electionRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Record to delete not found."));
 

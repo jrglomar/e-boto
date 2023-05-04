@@ -21,7 +21,7 @@ public class VotingLineController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<VotingLine> findById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<VotingLine> findById(@PathVariable Long id){
         return new ResponseEntity<>(votingLineService.findVotingLineById(id), HttpStatus.OK);
     }
 
@@ -31,12 +31,12 @@ public class VotingLineController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<VotingLine> update(@RequestBody VotingLine votingLine, @PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<VotingLine> update(@RequestBody VotingLine votingLine, @PathVariable Long id){
         return new ResponseEntity<>(votingLineService.updateVotingLine(votingLine, id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity<>(votingLineService.deleteVotingLine(id), HttpStatus.ACCEPTED);
     }
 }

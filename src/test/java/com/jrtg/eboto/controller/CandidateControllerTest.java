@@ -41,11 +41,11 @@ public class CandidateControllerTest {
 
     @BeforeEach
     void setup() {
-        candidate1 = Candidate.builder().candidateId(1L).candidateName("Raven").build();
+        candidate1 = Candidate.builder().candidateId(1L).name("Raven").description("").build();
 
-        candidate2 = Candidate.builder().candidateId(2L).candidateName("AJ").build();
+        candidate2 = Candidate.builder().candidateId(2L).name("AJ").description("").build();
 
-        candidate3 = Candidate.builder().candidateId(3L).candidateName("Baqui").build();
+        candidate3 = Candidate.builder().candidateId(3L).name("Baqui").description("").build();
 
         candidateList = List.of(candidate1, candidate2, candidate3);
     }
@@ -59,7 +59,7 @@ public class CandidateControllerTest {
 
         mockMvc.perform(get("/candidates")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].candidateName", containsInAnyOrder("AJ", "Raven", "Baqui")))
+                .andExpect(jsonPath("$[*].name,description", containsInAnyOrder("AJ", "Raven", "Baqui")))
                 .andExpect(status().isOk());
     }
 
@@ -82,8 +82,12 @@ public class CandidateControllerTest {
         mockMvc.perform(post("/candidates")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(candidate1)))
-                .andExpect(jsonPath("$.candidateName").value("Raven"))
+                //.andExpect(jsonPath("$.candidateName").value("Raven"))
+                //.andExpect(jsonPath("$.candidateId").value(1))
+                .andExpect(jsonPath("$.name").value("Raven"))
                 .andExpect(jsonPath("$.candidateId").value(1))
+                .andExpect(jsonPath("$.description").value(""))
+
                 .andExpect(status().isOk());
     }
 

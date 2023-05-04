@@ -1,6 +1,5 @@
 package com.jrtg.eboto.service;
 
-import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.Candidate;
 import com.jrtg.eboto.repository.CandidateRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +36,11 @@ class CandidateServiceImplTest {
 
     @BeforeEach
     void setup() {
-        candidate1 = Candidate.builder().candidateId(1L).candidateName("Raven").build();
+        candidate1 = Candidate.builder().candidateId(1L).name("Raven").build();
 
-        candidate2 = Candidate.builder().candidateId(1L).candidateName("AJ").build();
+        candidate2 = Candidate.builder().candidateId(1L).name("AJ").build();
 
-        candidate3 = Candidate.builder().candidateId(1L).candidateName("Baqui").build();
+        candidate3 = Candidate.builder().candidateId(1L).name("Baqui").build();
 
         candidateList = List.of(candidate1, candidate2, candidate3);
     }
@@ -84,7 +83,7 @@ class CandidateServiceImplTest {
     void updateCandidate() throws RecordNotFoundException {
         when(candidateRepository.findById(anyLong())).thenReturn(Optional.ofNullable(candidate1));
 
-        Candidate updateSample = new Candidate(1L, "updat3d");
+        Candidate updateSample = new Candidate(1L, "updat3d","");
         when(candidateRepository.save(any(Candidate.class))).thenReturn(updateSample);
 
         Candidate result = candidateService.updateCandidate(updateSample, 1L);
@@ -99,7 +98,7 @@ class CandidateServiceImplTest {
     void deleteCandidate() throws RecordNotFoundException {
         when(candidateRepository.findById(anyLong())).thenReturn(Optional.ofNullable(candidate1));
 
-        Candidate deleteSample = new Candidate(1L, "delet3d");
+        Candidate deleteSample = new Candidate(1L, "delet3d","");
         when(candidateRepository.save(any(Candidate.class))).thenReturn(deleteSample);
 
         String result = candidateService.deleteCandidate(1L);

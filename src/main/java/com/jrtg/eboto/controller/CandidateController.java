@@ -21,7 +21,7 @@ public class CandidateController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Candidate> findById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<Candidate> findById(@PathVariable Long id){
         return new ResponseEntity<>(candidateService.findCandidateById(id), HttpStatus.OK);
     }
 
@@ -31,12 +31,12 @@ public class CandidateController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Candidate> update(@RequestBody Candidate candidate, @PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<Candidate> update(@RequestBody Candidate candidate, @PathVariable Long id){
         return new ResponseEntity<>(candidateService.updateCandidate(candidate, id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity<>(candidateService.deleteCandidate(id), HttpStatus.ACCEPTED);
     }
 }
