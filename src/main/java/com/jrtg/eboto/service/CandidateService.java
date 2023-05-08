@@ -9,7 +9,7 @@ public interface CandidateService {
     
     List<Candidate> findAllCandidate();
     
-    Candidate saveCandidate(Candidate candidate);
+    Candidate saveCandidate(Candidate candidate, Long id);
     
     Candidate updateCandidate(Candidate candidate, Long id);
     

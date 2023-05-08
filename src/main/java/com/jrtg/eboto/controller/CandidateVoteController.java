@@ -19,12 +19,12 @@ public class CandidateVoteController {
         return new ResponseEntity<>(candidateVoteService.findAllCandidateVote(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<CandidateVote> findById(@PathVariable Long id) throws RecordNotFoundException{
+    public ResponseEntity<CandidateVote> findById(@PathVariable Long id){
         return new ResponseEntity<>(candidateVoteService.findCandidateVoteById(id),HttpStatus.OK);
     }
-    @PostMapping
-    public ResponseEntity<CandidateVote> save(@RequestBody CandidateVote candidateVote){
-        return new ResponseEntity<>(candidateVoteService.saveCandidateVote(candidateVote),HttpStatus.OK);
+    @PostMapping("/{userId}/{candidateId}")
+    public ResponseEntity<CandidateVote> save(@RequestBody CandidateVote candidateVote,@PathVariable Long userId, @PathVariable Long candidateId){
+        return new ResponseEntity<>(candidateVoteService.saveCandidateVote(candidateVote,userId,candidateId),HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<CandidateVote> update(@RequestBody CandidateVote candidateVote, @PathVariable Long id){
@@ -33,7 +33,7 @@ public class CandidateVoteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id)throws RecordNotFoundException{
+    public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity<>(candidateVoteService.deleteCandidateVote(id),HttpStatus.ACCEPTED);
     }
 

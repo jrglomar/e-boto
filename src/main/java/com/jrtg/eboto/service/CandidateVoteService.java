@@ -9,7 +9,7 @@ public interface CandidateVoteService {
     CandidateVote findCandidateVoteById(Long id);
 
     List<CandidateVote> findAllCandidateVote();
-    CandidateVote saveCandidateVote(CandidateVote candidateVote);
+    CandidateVote saveCandidateVote(CandidateVote candidateVote, Long userId, Long candidateId);
 
     CandidateVote updateCandidateVote(CandidateVote candidateVote, Long id);
     String deleteCandidateVote(Long id) throws RecordNotFoundException;

@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Position {
+public class Position extends BaseAuditClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

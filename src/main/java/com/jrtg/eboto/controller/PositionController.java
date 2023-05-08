@@ -1,12 +1,12 @@
 package com.jrtg.eboto.controller;
-
-import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.Position;
 import com.jrtg.eboto.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/position")
@@ -20,7 +20,7 @@ public class PositionController {
         return new ResponseEntity<>(positionService.findAllPosition(), HttpStatus.OK);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Position> findById(@PathVariable Long id){
+    public ResponseEntity<Position> findById(@Valid @PathVariable Long id){
         return new ResponseEntity<>(positionService.findPositionById(id),HttpStatus.OK);
 
     }

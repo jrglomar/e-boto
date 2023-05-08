@@ -1,6 +1,6 @@
 package com.jrtg.eboto.controller;
 
-import com.jrtg.eboto.exception.RecordNotFoundException;
+
 import com.jrtg.eboto.model.User;
 import com.jrtg.eboto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
