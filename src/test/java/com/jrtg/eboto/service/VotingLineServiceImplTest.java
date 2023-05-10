@@ -1,5 +1,6 @@
 package com.jrtg.eboto.service;
 
+import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.VotingLine;
 import com.jrtg.eboto.repository.VotingLineRepository;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,5 +1,6 @@
 package com.jrtg.eboto.service;
 
+import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.Election;
 import com.jrtg.eboto.repository.ElectionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,11 +37,11 @@ class ElectionServiceImplTest {
 
     @BeforeEach
     void setup() {
-        election1 = Election.builder().electionId(1L).electionName("Raven").build();
+        election1 = Election.builder().electionId(1L).title("Raven").build();
 
-        election2 = Election.builder().electionId(1L).electionName("AJ").build();
+        election2 = Election.builder().electionId(1L).title("AJ").build();
 
-        election3 = Election.builder().electionId(1L).electionName("Baqui").build();
+        election3 = Election.builder().electionId(1L).title("Baqui").build();
 
         electionList = List.of(election1, election2, election3);
     }
@@ -83,7 +84,7 @@ class ElectionServiceImplTest {
     void updateElection() throws RecordNotFoundException {
         when(electionRepository.findById(anyLong())).thenReturn(Optional.ofNullable(election1));
 
-        Election updateSample = new Election(1L, "updat3d");
+        Election updateSample = Election.builder().electionId(1L).title("updat3d").build();
         when(electionRepository.save(any(Election.class))).thenReturn(updateSample);
 
         Election result = electionService.updateElection(updateSample, 1L);
@@ -98,7 +99,8 @@ class ElectionServiceImplTest {
     void deleteElection() throws RecordNotFoundException {
         when(electionRepository.findById(anyLong())).thenReturn(Optional.ofNullable(election1));
 
-        Election deleteSample = new Election(1L, "delet3d");
+        Election deleteSample =Election.builder().electionId(1L).title("delet3d").build();
+//                new Election(1L, "delet3d");
         when(electionRepository.save(any(Election.class))).thenReturn(deleteSample);
 
         String result = electionService.deleteElection(1L);
