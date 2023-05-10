@@ -41,11 +41,11 @@ public class ElectionControllerTest {
 
     @BeforeEach
     void setup() {
-        election1 = Election.builder().electionId(1L).electionName("Raven").build();
+        election1 = Election.builder().electionId(1L).title("Raven").build();
+        election2 = Election.builder().electionId(2L).title("AJ").build();
+        //election2 = Election.builder().electionId(2L).electionName("AJ").build();
 
-        election2 = Election.builder().electionId(2L).electionName("AJ").build();
-
-        election3 = Election.builder().electionId(3L).electionName("Baqui").build();
+        election3 = Election.builder().electionId(3L).title("Baqui").build();
 
         electionList = List.of(election1, election2, election3);
     }
@@ -59,7 +59,7 @@ public class ElectionControllerTest {
 
         mockMvc.perform(get("/elections")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].electionName", containsInAnyOrder("AJ", "Raven", "Baqui")))
+                .andExpect(jsonPath("$[*].title", containsInAnyOrder("AJ", "Raven", "Baqui")))
                 .andExpect(status().isOk());
     }
 
@@ -82,7 +82,7 @@ public class ElectionControllerTest {
         mockMvc.perform(post("/elections")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(election1)))
-                .andExpect(jsonPath("$.electionName").value("Raven"))
+                .andExpect(jsonPath("$.title").value("Raven"))
                 .andExpect(jsonPath("$.electionId").value(1))
                 .andExpect(status().isOk());
     }
@@ -117,7 +117,7 @@ public class ElectionControllerTest {
         when(electionService.findElectionById(any()))
                 .thenThrow(new RecordNotFoundException("Record not found."));
 
-        mockMvc.perform(get("/elections/{id}", 1)
+        mockMvc.perform(get("/elections/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof RecordNotFoundException))

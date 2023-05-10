@@ -49,4 +49,5 @@ public class Election extends BaseAuditClass {
     @JsonIgnore
     private List<Position> positionList;
 
+
 }

@@ -33,9 +33,10 @@ public class ElectionServiceImpl implements ElectionService {
     public Election updateElection(Election election, Long id) {
         Election electionFound = electionRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Record not found."));
-
         electionFound.setTitle(election.getTitle());
-
+        electionFound.setDescription(election.getDescription());
+        electionFound.setStatus(election.isStatus());
+        electionFound.setDateEnd(election.getDateEnd());
         return electionRepository.save(electionFound);
     }
 

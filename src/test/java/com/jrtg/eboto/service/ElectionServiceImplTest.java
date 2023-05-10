@@ -1,5 +1,6 @@
 package com.jrtg.eboto.service;
 
+import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.Election;
 import com.jrtg.eboto.repository.ElectionRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,18 +37,18 @@ class ElectionServiceImplTest {
 
     @BeforeEach
     void setup() {
-        election1 = Election.builder().electionId(1L).electionName("Raven").build();
+        election1 = Election.builder().electionId(1L).title("Raven").dateEnd("09/05/23").description("any").status(false).build();
 
-        election2 = Election.builder().electionId(1L).electionName("AJ").build();
+        election2 = Election.builder().electionId(1L).title("AJ").dateEnd("09/05/23").description("any").status(false).build();
 
-        election3 = Election.builder().electionId(1L).electionName("Baqui").build();
+        election3 = Election.builder().electionId(1L).title("Baqui").dateEnd("09/05/23").description("any").status(false).build();
 
         electionList = List.of(election1, election2, election3);
     }
 
     @Test
     @DisplayName("Finding election by id")
-    void findElectionById() throws RecordNotFoundException {
+    void findElectionById(){
         when(electionRepository.findById(anyLong())).thenReturn(Optional.ofNullable(election1));
 
         Election result = electionService.findElectionById(1L);
@@ -78,12 +79,13 @@ class ElectionServiceImplTest {
         assertThat(result).isEqualTo(election1);
     }
 
+    //tanong bukas
     @Test
     @DisplayName("Updating a election ")
-    void updateElection() throws RecordNotFoundException {
+    void updateElection() {
         when(electionRepository.findById(anyLong())).thenReturn(Optional.ofNullable(election1));
 
-        Election updateSample = new Election(1L, "updat3d");
+        Election updateSample = new Election();//election1,"1L");
         when(electionRepository.save(any(Election.class))).thenReturn(updateSample);
 
         Election result = electionService.updateElection(updateSample, 1L);
@@ -95,10 +97,10 @@ class ElectionServiceImplTest {
 
     @Test
     @DisplayName("Deleting a election")
-    void deleteElection() throws RecordNotFoundException {
+    void deleteElection(){
         when(electionRepository.findById(anyLong())).thenReturn(Optional.ofNullable(election1));
 
-        Election deleteSample = new Election(1L, "delet3d");
+        Election deleteSample = new Election();//1L, "delet3d");
         when(electionRepository.save(any(Election.class))).thenReturn(deleteSample);
 
         String result = electionService.deleteElection(1L);

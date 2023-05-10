@@ -1,5 +1,6 @@
 package com.jrtg.eboto.service;
 
+import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.User;
 import com.jrtg.eboto.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,22 +44,22 @@ class UserServiceImplTest {
                 .userId(1L)
                 .firstName("jglomar")
                 .password("p@ssw0rd")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("caranzo")
                 .build();
         user2 = User.builder()
                 .userId(2L)
                 .firstName("agutierrez")
                 .password("p@ssw0rd")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("caranzo")
                 .build();
         user3 = User.builder()
                 .userId(3L)
                 .firstName("cbaquiran")
                 .middleName("C")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("caranzo")
                 .password("p@ssw0rd")
                 .build();
 
@@ -109,7 +110,7 @@ class UserServiceImplTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
 
-        User updateSample = new User(1L, "jglomar_updated", "p@ssw0rd","","","");
+        User updateSample = new User(1L, "jglomar_updated", "C", "caranzo", "ajgutierrez@gmail.com", "p@ssw0rd");
         when(userRepository.save(any(User.class))).thenReturn(updateSample);
         User result = userService.updateUser(updateSample, 1L);
 
@@ -123,9 +124,11 @@ class UserServiceImplTest {
     @DisplayName("Deleting a user")
     void deleteUser() throws RecordNotFoundException {
 
-        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
+        //when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.ofNullable(user1));
 
-        User updateSample = new User(1L, "jglomar", "updat3d","","","");
+        User updateSample = new User(1L, "jglomar", "C", "caranzo", "ajgutierrez@gmail.com", "p@ssw0rd");
+        when(userRepository.save(any(User.class))).thenReturn(updateSample);
         String result = userService.deleteUser(1L);
 
         verify(userRepository).findById(1L);

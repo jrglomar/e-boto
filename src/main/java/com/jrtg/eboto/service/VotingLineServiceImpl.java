@@ -30,7 +30,8 @@ public class VotingLineServiceImpl implements VotingLineService {
 
     @Override
     public VotingLine updateVotingLine(VotingLine votingLineRequest, Long id){
-        VotingLine votingLineFound = votingLineRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
+        VotingLine votingLineFound = votingLineRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Record not found."));
         
         votingLineFound.setVotingLineTitle(votingLineRequest.getVotingLineTitle());
         
