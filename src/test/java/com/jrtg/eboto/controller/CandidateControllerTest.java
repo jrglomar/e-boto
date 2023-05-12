@@ -41,11 +41,11 @@ public class CandidateControllerTest {
 
     @BeforeEach
     void setup() {
-        candidate1 = Candidate.builder().candidateId(1L).name("Raven").description("").build();
+        candidate1 = Candidate.builder().candidateId(1L).name("Raven").description("President").build();
 
-        candidate2 = Candidate.builder().candidateId(2L).name("AJ").description("").build();
+        candidate2 = Candidate.builder().candidateId(2L).name("AJ").description("Vice-President").build();
 
-        candidate3 = Candidate.builder().candidateId(3L).name("Baqui").description("").build();
+        candidate3 = Candidate.builder().candidateId(3L).name("Baqui").description("Secretary").build();
 
         candidateList = List.of(candidate1, candidate2, candidate3);
     }
@@ -59,7 +59,7 @@ public class CandidateControllerTest {
 
         mockMvc.perform(get("/candidates")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].name,description", containsInAnyOrder("AJ", "Raven", "Baqui")))
+                .andExpect(jsonPath("$[*].name", containsInAnyOrder("AJ", "Raven", "Baqui")))
                 .andExpect(status().isOk());
     }
 
@@ -74,22 +74,22 @@ public class CandidateControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    @DisplayName("Saving a new candidate")
-//    void save() throws Exception {
-//        when(candidateService.saveCandidate(any(Candidate.class))).thenReturn(candidate1);
-//
-//        mockMvc.perform(post("/candidates")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(new ObjectMapper().writeValueAsString(candidate1)))
-//                //.andExpect(jsonPath("$.candidateName").value("Raven"))
-//                //.andExpect(jsonPath("$.candidateId").value(1))
-//                .andExpect(jsonPath("$.name").value("Raven"))
-//                .andExpect(jsonPath("$.candidateId").value(1))
-//                .andExpect(jsonPath("$.description").value(""))
-//
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    @DisplayName("Saving a new candidate")
+    void save() throws Exception {
+        when(candidateService.saveCandidate(any(Candidate.class),anyLong())).thenReturn(candidate1);
+
+        mockMvc.perform(post("/candidates/{id}", 1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(candidate1)))
+                //.andExpect(jsonPath("$.candidateName").value("Raven"))
+                //.andExpect(jsonPath("$.candidateId").value(1))
+                .andExpect(jsonPath("$.name").value("Raven"))
+                .andExpect(jsonPath("$.candidateId").value(1))
+                .andExpect(jsonPath("$.description").value("President"))
+
+                .andExpect(status().isOk());
+    }
 
     @Test
     @DisplayName("Updating an existing candidate")

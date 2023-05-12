@@ -60,7 +60,7 @@ class UserControllerTest {
 
         mockMvc.perform(get("/users")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$[*].userName", containsInAnyOrder("jglomar", "agutierrez", "cbaqui")))
+                .andExpect(jsonPath("$[*].firstName", containsInAnyOrder("jglomar", "agutierrez", "cbaqui")))
                 .andExpect(status().isOk());
     }
 
@@ -83,7 +83,7 @@ class UserControllerTest {
         mockMvc.perform(post("/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(user1)))
-                .andExpect(jsonPath("$.userName").value("jglomar"))
+                .andExpect(jsonPath("$.firstName").value("jglomar"))
                 .andExpect(jsonPath("$.userId").value(1))
                 .andExpect(status().isOk());
     }

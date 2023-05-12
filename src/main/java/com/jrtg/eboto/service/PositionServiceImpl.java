@@ -52,8 +52,8 @@ public class PositionServiceImpl implements PositionService {
     public String deletePosition(Long id){
         Position positionFound = positionRepository.findById(id)
                 .orElseThrow(()-> new RecordNotFoundException("Record to delete not found."));
-        positionFound.setTitle("updat3d");
+        positionFound.setTitle("delet3d");
         positionRepository.save(positionFound);
-        return "Record deleted";
+        return "Record deleted.";
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CandidateVoteImpl implements CandidateVoteService {
+public class CandidateVoteServiceImpl implements CandidateVoteService {
     @Autowired
     CandidateVoteRepository candidateVoteRepository;
     @Autowired
@@ -55,8 +55,8 @@ public class CandidateVoteImpl implements CandidateVoteService {
     @Override
     public String deleteCandidateVote(Long id) {
         CandidateVote candidateFound = candidateVoteRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
-        candidateFound.setVoteReference("dele3d");
+        candidateFound.setVoteReference("delet3d");
         candidateVoteRepository.save(candidateFound);
-        return "Record deleted";
+        return "Record deleted.";
     }
 }

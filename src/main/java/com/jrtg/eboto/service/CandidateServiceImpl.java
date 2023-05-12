@@ -31,11 +31,11 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public Candidate saveCandidate(Candidate candidate, Long id) {
-        Optional<Position> candidateFound = positionRepository.findById(id);
-        if (candidateFound.isEmpty()) {
+        Optional<Position> positionFound = positionRepository.findById(id);
+        if (positionFound.isEmpty()) {
             throw new RecordNotFoundException("Record not found");
         }
-        candidate.setPosition(candidateFound.get());
+        candidate.setPosition(positionFound.get());
         return candidateRepository.save(candidate);
     }
 

@@ -43,23 +43,25 @@ class UserServiceImplTest {
         user1 = User.builder()
                 .userId(1L)
                 .firstName("jglomar")
+                .middleName("C")
                 .password("p@ssw0rd")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("Gutierrez")
                 .build();
         user2 = User.builder()
                 .userId(2L)
                 .firstName("agutierrez")
+                .middleName("C")
                 .password("p@ssw0rd")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("Gutierrez")
                 .build();
         user3 = User.builder()
                 .userId(3L)
                 .firstName("cbaquiran")
                 .middleName("C")
-                .email("")
-                .lastName("")
+                .email("ajgutierrez@gmail.com")
+                .lastName("Gutierrez")
                 .password("p@ssw0rd")
                 .build();
 
@@ -126,7 +128,14 @@ class UserServiceImplTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(user1));
 
-        User updateSample = new User(1L, "jglomar", "updat3d","","","");
+        User updateSample =User.builder()
+                .userId(1L)
+                .firstName("jglomar")
+                .password("updat3d")
+                .email("ajgutierrez@gmail.com")
+                .lastName("Gutierrez")
+                .middleName("C")
+                .build();
         String result = userService.deleteUser(1L);
 
         verify(userRepository).findById(1L);
