@@ -1,6 +1,6 @@
 package com.jrtg.eboto.controller;
 
-import com.jrtg.eboto.exception.RecordNotFoundException;
+
 import com.jrtg.eboto.model.User;
 import com.jrtg.eboto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<User> findById(@PathVariable Long id){
         return new ResponseEntity<>(userService.findUserById(id), HttpStatus.OK);
     }
 
@@ -31,12 +31,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Long id){
         return new ResponseEntity<>(userService.updateUser(user, id), HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) throws RecordNotFoundException {
+    public ResponseEntity<String> delete(@PathVariable Long id){
         return new ResponseEntity<>(userService.deleteUser(id), HttpStatus.ACCEPTED);
     }
 

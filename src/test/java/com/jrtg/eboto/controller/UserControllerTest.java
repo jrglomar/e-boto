@@ -42,11 +42,11 @@ class UserControllerTest {
 
     @BeforeEach
     void setup() {
-        user1 = User.builder().userId(1L).userName("jglomar").build();
+        user1 = User.builder().userId(1L).firstName("jglomar").build();
 
-        user2 = User.builder().userId(2L).userName("agutierrez").build();
+        user2 = User.builder().userId(2L).firstName("agutierrez").build();
 
-        user3 = User.builder().userId(3L).userName("cbaqui").build();
+        user3 = User.builder().userId(3L).firstName("cbaqui").build();
 
         userList = List.of(user1, user2, user3);
     }

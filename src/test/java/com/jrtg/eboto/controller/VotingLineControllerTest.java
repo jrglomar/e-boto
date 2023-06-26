@@ -1,6 +1,5 @@
 package com.jrtg.eboto.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jrtg.eboto.exception.RecordNotFoundException;
 import com.jrtg.eboto.model.VotingLine;

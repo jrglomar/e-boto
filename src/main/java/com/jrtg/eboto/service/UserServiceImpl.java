@@ -15,7 +15,7 @@ public class UserServiceImpl implements UserService {
     UserRepository userRepository;
 
     @Override
-    public User findUserById(Long id) throws RecordNotFoundException {
+    public User findUserById(Long id){
         return userRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Record not found."));
     }
 
@@ -30,22 +30,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User userRequest, Long id) throws RecordNotFoundException {
+    public User updateUser(User userRequest, Long id){
         User userFound = userRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Record to update not found."));
         
-        userFound.setUserName(userRequest.getUserName());
-        userFound.setUserPassword(userRequest.getUserPassword());
-        
+        userFound.setFirstName(userRequest.getFirstName());
+        userFound.setMiddleName(userRequest.getMiddleName());
+        userFound.setLastName(userRequest.getLastName());
+        userFound.setEmail(userRequest.getEmail());
+        userFound.setPassword(userRequest.getPassword());
         return userRepository.save(userFound);
     }
 
     @Override
-    public String deleteUser(Long id) throws RecordNotFoundException {
+    public String deleteUser(Long id){
         User userFound = userRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException("Record to delete not found."));
-        
-        userFound.setUserPassword("updat3d");
+        userFound.setPassword("updat3d");
         userRepository.save(userFound);
         return "Record deleted.";
     }

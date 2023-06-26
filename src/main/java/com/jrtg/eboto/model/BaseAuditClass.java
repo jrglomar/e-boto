@@ -27,4 +27,7 @@ public abstract class BaseAuditClass {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Column(name="status")
+    private boolean activeStatus;
+
 }
